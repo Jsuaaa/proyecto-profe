@@ -1,0 +1,7 @@
+node_modules
+dist
+pnpm-lock.yaml
+
+# Artefactos de macOS en volumenes exFAT/NTFS (no aparecen en FS normales)
+._*
+.DS_Store

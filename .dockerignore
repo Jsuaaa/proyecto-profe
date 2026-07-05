@@ -1,0 +1,41 @@
+# Build limpio y liviano: nada de esto entra en el contexto de build.
+# El builder instala dependencias y regenera dist/ desde cero dentro de la imagen.
+
+# Dependencias y artefactos (se reconstruyen en el stage builder)
+node_modules
+dist
+dist-ssr
+.vite
+
+# Docker (no hace falta dentro de la imagen)
+Dockerfile
+.dockerignore
+
+# Control de versiones y metadatos
+.git
+.gitignore
+.gitattributes
+
+# Logs y temporales
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.local
+
+# Basura de macOS (este repo vive en un volumen que genera AppleDouble)
+.DS_Store
+._*
+
+# Editor
+.vscode
+.idea
+*.suo
+*.sw?
+
+# Config de tooling que el build de produccion no necesita
+.prettierrc
+.prettierignore
+eslint.config.js

@@ -1,0 +1,436 @@
+/* ============================================================
+   Finca · Hoja de estilos global (Tailwind CSS v4)
+   ------------------------------------------------------------
+   Configuracion CSS-first: NO hay tailwind.config.js.
+   El plugin oficial `@tailwindcss/vite` procesa este archivo.
+
+   Integra el Design System de Finca:
+     - Tokens: espejo de design-system/tokens/{colors,typography,
+       spacing,effects}.css (ver ../../../design-system/).
+     - Fuente Poppins AUTO-ALOJADA (public/fonts/*.woff2), sin CDN.
+   ============================================================ */
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------
+   FUENTE POPPINS — auto-alojada (subserie `latin`, cubre es-CO:
+   á é í ó ú ñ ¿ ¡). Descargada de Google Fonts a public/fonts/.
+   NO se depende de fonts.googleapis.com en runtime.
+   El DS usa Poppins como sustituto del tipo del sitio real (Divi);
+   ver design-system/readme.md.
+   ------------------------------------------------------------ */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/poppins-latin-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/poppins-latin-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/poppins-latin-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/poppins-latin-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/poppins-latin-800.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('/fonts/poppins-latin-900.woff2') format('woff2');
+}
+
+/* ============================================================
+   TOKENS DEL DESIGN SYSTEM  (replica verbatim — fuente de verdad)
+   ============================================================
+   Origen: design-system/tokens/{colors,typography,spacing,effects}.css
+   Se conservan los NOMBRES del DS para poder portar sus componentes
+   en fases posteriores (F2+) sin renombrar variables.
+
+   Nota de cascada: este bloque va SIN cascade-layer, por lo que
+   pisa a proposito las primitivas homonimas de Tailwind
+   (--radius-sm/md/lg/xl, --shadow-sm, --ease-out) y las tematiza
+   con los valores de Finca. Es intencional (coherencia de marca).
+   ------------------------------------------------------------ */
+:root {
+  /* ---- colors.css · Brand greens ---- */
+  --finca-green: #1f9950; /* logo body green — core brand color        */
+  --finca-green-vivid: #03a552; /* bright headline green ("EFICIENCIA") */
+  --finca-green-deep: #007a2f; /* deep green — nav CTA, dark section bg */
+  --finca-green-forest: #005a22; /* darkest green — footer, overlays    */
+  --finca-green-tint: #e8f4ec; /* pale green wash — section backgrounds */
+  --finca-green-tint-2: #d3ebda; /* slightly stronger pale green        */
+
+  /* ---- colors.css · Brand accents ---- */
+  --finca-red: #dd2026; /* logo mark red — used very sparingly */
+  --finca-red-dark: #b71a1f;
+  --finca-yellow: #f2ce00; /* sunburst yellow — highlights, help button */
+  --finca-yellow-warm: #f7b500; /* warmer amber variant */
+
+  /* ---- colors.css · Neutrals ---- */
+  --finca-ink: #262623; /* near-black text          */
+  --finca-gray-900: #333333;
+  --finca-gray-700: #555555;
+  --finca-gray-600: #707070; /* body copy gray            */
+  --finca-gray-400: #a3a3a3;
+  --finca-gray-300: #cfcfcf;
+  --finca-gray-200: #e4e4e4;
+  --finca-gray-100: #f2f3f1; /* header / light section bg */
+  --finca-white: #ffffff;
+
+  /* ---- colors.css · Semantic aliases (para CSS de autor) ---- */
+  --color-primary: var(--finca-green);
+  --color-primary-hover: var(--finca-green-deep);
+  --color-primary-active: var(--finca-green-forest);
+  --color-accent: var(--finca-green-vivid);
+  --color-danger: var(--finca-red);
+  --color-highlight: var(--finca-yellow);
+
+  --text-heading: var(--finca-green-deep);
+  --text-heading-strong: var(--finca-ink);
+  --text-body: var(--finca-gray-600);
+  --text-muted: var(--finca-gray-400);
+  --text-on-dark: var(--finca-white);
+  --text-link: var(--finca-green-deep);
+
+  --surface-page: var(--finca-white);
+  --surface-subtle: var(--finca-gray-100);
+  --surface-green: var(--finca-green);
+  --surface-green-tint: var(--finca-green-tint);
+  --surface-dark: var(--finca-green-forest);
+  --surface-card: var(--finca-white);
+
+  --border-subtle: var(--finca-gray-200);
+  --border-strong: var(--finca-gray-300);
+  --border-brand: var(--finca-green);
+
+  /* ---- typography.css · Weights ---- */
+  /* (Familias --font-display/--font-body se definen en @theme para
+     generar utilidades; Tailwind las re-emite a :root, por lo que
+     `var(--font-display)` sigue disponible para CSS de autor.) */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+  --fw-black: 900;
+
+  /* ---- typography.css · Type scale (rem @ 16px base) ---- */
+  --fs-display: 4.5rem; /* 72px — hero headline, UPPERCASE */
+  --fs-h1: 3rem; /* 48px — big section headline    */
+  --fs-h2: 2.25rem; /* 36px                           */
+  --fs-h3: 1.75rem; /* 28px — card / block titles     */
+  --fs-h4: 1.375rem; /* 22px                           */
+  --fs-lead: 1.25rem; /* 20px — intro paragraphs        */
+  --fs-body: 1rem; /* 16px — base body               */
+  --fs-sm: 0.875rem; /* 14px                           */
+  --fs-xs: 0.75rem; /* 12px — eyebrows, labels        */
+
+  /* ---- typography.css · Line heights ---- */
+  --lh-tight: 1.02; /* display, stacked uppercase */
+  --lh-heading: 1.15;
+  --lh-snug: 1.35;
+  --lh-body: 1.65;
+
+  /* ---- typography.css · Letter spacing ---- */
+  --ls-display: -0.01em;
+  --ls-eyebrow: 0.14em; /* "SOMOS MAESTROS EN" style eyebrows */
+  --ls-normal: 0;
+
+  /* ---- spacing.css · Spacing scale (4px base) ---- */
+  --space-1: 0.25rem; /* 4  */
+  --space-2: 0.5rem; /* 8  */
+  --space-3: 0.75rem; /* 12 */
+  --space-4: 1rem; /* 16 */
+  --space-5: 1.5rem; /* 24 */
+  --space-6: 2rem; /* 32 */
+  --space-7: 3rem; /* 48 */
+  --space-8: 4rem; /* 64 */
+  --space-9: 6rem; /* 96 — section vertical rhythm */
+
+  /* ---- spacing.css · Radii ---- */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px; /* cards */
+  --radius-xl: 28px;
+  --radius-pill: 999px; /* buttons son pills totalmente redondeados */
+
+  /* ---- spacing.css · Layout ---- */
+  --container-max: 1200px;
+  --container-wide: 1440px;
+  --header-h: 88px;
+  --section-y: 5.5rem; /* 88px — ritmo vertical de seccion */
+
+  /* ---- effects.css · Shadows ---- */
+  --shadow-sm: 0 1px 3px rgba(38, 38, 35, 0.08);
+  --shadow-card: 0 10px 30px rgba(38, 38, 35, 0.1);
+  --shadow-card-hover: 0 18px 44px rgba(31, 153, 80, 0.22);
+  --shadow-btn: 0 6px 16px rgba(0, 122, 47, 0.28);
+  --shadow-float: 0 8px 24px rgba(38, 38, 35, 0.22);
+
+  /* ---- effects.css · Borders ---- */
+  --border-width: 2px; /* outline buttons / pills usan trazo de 2px */
+
+  /* ---- effects.css · Motion ---- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 140ms;
+  --dur: 240ms;
+  --dur-slow: 420ms;
+
+  /* ---- effects.css · Overlays ---- */
+  --scrim-hero: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.15) 55%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  --scrim-bottom: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+}
+
+/* ============================================================
+   PUENTE A TAILWIND  (@theme → genera utilidades)
+   ============================================================
+   Expone la marca a Tailwind v4. Valores LITERALES (espejo del DS)
+   para maxima robustez con modificadores de opacidad, etc.
+   Cada --color-x genera bg-x, text-x y border-x; --font-x genera
+   font-x; --text-x genera tamanos; --radius-x genera rounded-x;
+   --shadow-x, --tracking-x y --leading-x, idem.
+   ------------------------------------------------------------ */
+@theme {
+  /* ---- Familias (Poppins auto-alojada) ---- */
+  --font-sans: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* ---- Paleta Finca → bg-finca-*, text-finca-*, border-finca-* ---- */
+  --color-finca-green: #1f9950;
+  --color-finca-green-vivid: #03a552;
+  --color-finca-green-deep: #007a2f;
+  --color-finca-green-forest: #005a22;
+  --color-finca-green-tint: #e8f4ec;
+  --color-finca-green-tint-2: #d3ebda;
+  --color-finca-red: #dd2026;
+  --color-finca-red-dark: #b71a1f;
+  --color-finca-yellow: #f2ce00;
+  --color-finca-yellow-warm: #f7b500;
+  --color-finca-ink: #262623;
+  --color-finca-gray-900: #333333;
+  --color-finca-gray-700: #555555;
+  --color-finca-gray-600: #707070;
+  --color-finca-gray-400: #a3a3a3;
+  --color-finca-gray-300: #cfcfcf;
+  --color-finca-gray-200: #e4e4e4;
+  --color-finca-gray-100: #f2f3f1;
+  --color-finca-white: #ffffff;
+
+  /* ---- Semanticos de superficie/tinta ---- */
+  --color-surface: #ffffff; /* pagina           */
+  --color-surface-subtle: #f2f3f1; /* seccion clara    */
+  --color-surface-tint: #e8f4ec; /* wash verde palido */
+  --color-surface-dark: #005a22; /* banda oscura     */
+  --color-ink: #262623;
+  --color-on-dark: #ffffff;
+
+  /* ---- Back-compat con el scaffold (Navbar/RootLayout/paginas) ----
+     Rampa "brand" mapeada a los verdes de Finca. */
+  --color-brand-50: #e8f4ec;
+  --color-brand-100: #d3ebda;
+  --color-brand-200: #b7ddc4;
+  --color-brand-300: #86c79b;
+  --color-brand-400: #46ac6f;
+  --color-brand-500: #1f9950; /* primario de marca         */
+  --color-brand-600: #007a2f; /* deep — hover/enlaces       */
+  --color-brand-700: #005a22; /* forest — encabezados/footer */
+  --color-brand-800: #00491b;
+  --color-brand-900: #003614;
+
+  /* ---- Escala tipografica → text-display/h1/h2/h3/h4/lead ----
+     (body = text-base 1rem; sm/xs = defaults de Tailwind) */
+  --text-display: 4.5rem;
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.01em;
+  --text-h1: 3rem;
+  --text-h1--line-height: 1.15;
+  --text-h2: 2.25rem;
+  --text-h2--line-height: 1.15;
+  --text-h3: 1.75rem;
+  --text-h3--line-height: 1.2;
+  --text-h4: 1.375rem;
+  --text-h4--line-height: 1.3;
+  --text-lead: 1.25rem;
+  --text-lead--line-height: 1.35;
+
+  /* ---- Radios de marca → rounded-card, rounded-pill ---- */
+  --radius-card: 20px;
+  --radius-pill: 999px;
+
+  /* ---- Sombras de marca → shadow-card, shadow-btn, ... ---- */
+  --shadow-card: 0 10px 30px rgba(38, 38, 35, 0.1);
+  --shadow-card-hover: 0 18px 44px rgba(31, 153, 80, 0.22);
+  --shadow-btn: 0 6px 16px rgba(0, 122, 47, 0.28);
+  --shadow-float: 0 8px 24px rgba(38, 38, 35, 0.22);
+
+  /* ---- Tracking / leading de marca ---- */
+  --tracking-eyebrow: 0.14em;
+  --tracking-display: -0.01em;
+  --leading-body: 1.65;
+  --leading-heading: 1.15;
+  --leading-display: 1.02;
+}
+
+/* ============================================================
+   BASE — reset minimo + tipografia base de marca.
+   ------------------------------------------------------------ */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    min-height: 100svh;
+    background-color: var(--surface-page); /* blanco */
+    color: var(--finca-gray-600); /* body gris #707070 */
+    font-family: var(--font-body); /* Poppins           */
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body); /* 1.65              */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Foco visible de teclado, coherente con la marca. `:where()` tiene
+     especificidad 0: NO pisa los anillos propios de Button/FAB/Input
+     (que usan utilidades `focus-visible:*`), solo cubre enlaces y
+     tarjetas que se apoyaban en el contorno por defecto del navegador. */
+  :where(a, button, [tabindex]):focus-visible {
+    outline: 3px solid var(--finca-green-deep);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+}
+
+/* ============================================================
+   UTILIDADES DE MARCA reutilizables (coherentes con el DS).
+   Nada de emoji. Consumidas por componentes y por la demo F1.
+   ------------------------------------------------------------ */
+@layer components {
+  /* Contenedor centrado 1200px con gutter. */
+  .site-wrap {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--space-6);
+  }
+
+  /* Ritmo de seccion ~88px arriba/abajo. */
+  .section-y {
+    padding-block: var(--section-y);
+  }
+
+  /* Eyebrow: bold, pequeno, tracked, MAYUSCULAS, verde. */
+  .eyebrow {
+    font-family: var(--font-display);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-xs);
+    letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase;
+    color: var(--finca-green);
+  }
+
+  /* Display: Black, MAYUSCULAS, verde vivo (titulares hero). */
+  .display {
+    font-family: var(--font-display);
+    font-weight: var(--fw-black);
+    font-size: var(--fs-display);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-display);
+    text-transform: uppercase;
+    color: var(--finca-green-vivid);
+    margin: 0;
+  }
+
+  /* Headline: Bold, verde profundo (titulos de seccion). */
+  .headline {
+    font-family: var(--font-display);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-h2);
+    line-height: var(--lh-heading);
+    color: var(--finca-green-deep);
+    margin: 0;
+  }
+
+  /* Banda de color: rompe el flujo blanco con verde de marca. */
+  .band {
+    background: linear-gradient(
+      120deg,
+      var(--finca-green-forest),
+      var(--finca-green)
+    );
+    color: var(--finca-white);
+    border-radius: var(--radius-lg);
+  }
+
+  /* Pill: boton totalmente redondeado (CTA solido de marca). */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-display);
+    font-weight: var(--fw-bold);
+    font-size: 0.9375rem;
+    line-height: 1;
+    color: var(--finca-white);
+    background: var(--finca-green);
+    border: var(--border-width) solid var(--finca-green);
+    border-radius: var(--radius-pill);
+    padding: 0.8125rem 1.875rem; /* 13px 30px */
+    box-shadow: var(--shadow-btn);
+    cursor: pointer;
+    transition:
+      transform var(--dur) var(--ease-out),
+      filter var(--dur),
+      background var(--dur);
+  }
+  .pill:hover {
+    transform: translateY(-2px);
+    filter: brightness(0.94);
+  }
+  /* Variante outline (verde sobre claro). */
+  .pill--outline {
+    background: transparent;
+    color: var(--finca-green-deep);
+    border-color: var(--finca-green);
+    box-shadow: none;
+  }
+  .pill--outline:hover {
+    background: var(--finca-green-tint);
+    filter: none;
+  }
+}
